@@ -4,7 +4,7 @@
 {-# LANGUAGE KindSignatures #-}
 
 module AST.Token (
-    Token (..),
+  Token (..),
 ) where
 
 import GHC.Generics (Generic, Generic1)
@@ -19,4 +19,4 @@ type AnonymousPlus = Token "+" 123
 @
 -}
 newtype Token (symName :: Symbol) (symVal :: Nat) a = Token {ann :: a}
-    deriving (Eq, Foldable, Functor, Generic, Generic1, Ord, Show, Traversable)
+  deriving (Eq, Foldable, Functor, Generic, Generic1, Ord, Show, Traversable)

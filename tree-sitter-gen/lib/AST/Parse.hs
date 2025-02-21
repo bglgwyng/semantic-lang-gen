@@ -4,7 +4,7 @@
 {-# LANGUAGE KindSignatures #-}
 
 module AST.Parse (
-    Err (..),
+  Err (..),
 ) where
 
 import GHC.Generics (Generic, Generic1)
@@ -21,13 +21,13 @@ When the parse fails, the f will be substituted with Err
 TODO: this could work with AST.Element Prj given the kindedness was adjusted from (*) to (* -> *).
 -}
 data Err a = Fail String | Success a
-    deriving (Eq, Foldable, Functor, Generic, Generic1, Ord, Traversable)
+  deriving (Eq, Foldable, Functor, Generic, Generic1, Ord, Traversable)
 
 instance Applicative Err where
-    pure = Success
-    Fail e <*> _ = Fail e
-    Success a <*> r = fmap a r
+  pure = Success
+  Fail e <*> _ = Fail e
+  Success a <*> r = fmap a r
 
 instance (Show a) => Show (Err a) where
-    show (Fail msg) = msg
-    show (Success a) = show a
+  show (Fail msg) = msg
+  show (Success a) = show a

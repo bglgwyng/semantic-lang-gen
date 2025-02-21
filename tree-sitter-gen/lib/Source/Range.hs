@@ -4,14 +4,14 @@
 {-# LANGUAGE RankNTypes #-}
 
 module Source.Range (
-    Range (..),
-    point,
-    rangeLength,
-    subtractRange,
+  Range (..),
+  point,
+  rangeLength,
+  subtractRange,
 
-    -- * Lenses
-    start_,
-    end_,
+  -- * Lenses
+  start_,
+  end_,
 ) where
 
 import Control.DeepSeq (NFData)
@@ -22,22 +22,22 @@ import GHC.Generics (Generic)
 
 -- | A 0-indexed, half-open interval of integers, defined by start & end indices.
 data Range = Range
-    { start :: {-# UNPACK #-} !Int
-    , end :: {-# UNPACK #-} !Int
-    }
-    deriving (Eq, Generic, Ord, Show)
+  { start :: {-# UNPACK #-} !Int
+  , end :: {-# UNPACK #-} !Int
+  }
+  deriving (Eq, Generic, Ord, Show)
 
 instance Hashable Range
 instance NFData Range
 
 instance Semigroup Range where
-    Range start1 end1 <> Range start2 end2 = Range (min start1 start2) (max end1 end2)
+  Range start1 end1 <> Range start2 end2 = Range (min start1 start2) (max end1 end2)
 
 instance Lower Range where
-    lowerBound = Range 0 0
+  lowerBound = Range 0 0
 
 instance ToJSON Range where
-    toJSON Range{start, end} = toJSON [start, end]
+  toJSON Range{start, end} = toJSON [start, end]
 
 -- | Construct a 'Range' with a given value for both its start and end indices.
 point :: Int -> Range

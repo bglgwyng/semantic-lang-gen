@@ -9,30 +9,30 @@ This module is intended to be imported qualified to avoid name clashes with 'Pre
 > import qualified Source.Source as Source
 -}
 module Source.Source (
-    Source,
-    bytes,
-    fromUTF8,
+  Source,
+  bytes,
+  fromUTF8,
 
-    -- * Measurement
-    Source.Source.length,
-    Source.Source.null,
-    totalRange,
-    totalSpan,
+  -- * Measurement
+  Source.Source.length,
+  Source.Source.null,
+  totalRange,
+  totalSpan,
 
-    -- * En/decoding
-    fromText,
-    toText,
+  -- * En/decoding
+  fromText,
+  toText,
 
-    -- * Slicing
-    slice,
-    drop,
-    take,
+  -- * Slicing
+  slice,
+  drop,
+  take,
 
-    -- * Splitting
-    Source.Source.lines,
-    lineRanges,
-    lineRangesWithin,
-    newlineIndices,
+  -- * Splitting
+  Source.Source.lines,
+  lineRanges,
+  lineRangesWithin,
+  newlineIndices,
 ) where
 
 import Prelude hiding (drop, take)
@@ -58,13 +58,13 @@ import Source.Span (Pos (..), Span (Span))
 passing 'fromUTF8' non-UTF8 bytes will cause crashes.
 -}
 newtype Source = Source {bytes :: B.ByteString}
-    deriving (Eq, Semigroup, Monoid, IsString, Show, Generic, NFData)
+  deriving (Eq, Semigroup, Monoid, IsString, Show, Generic, NFData)
 
 fromUTF8 :: B.ByteString -> Source
 fromUTF8 = Source
 
 instance FromJSON Source where
-    parseJSON = withText "Source" (pure . fromText)
+  parseJSON = withText "Source" (pure . fromText)
 
 -- Measurement
 
@@ -81,9 +81,9 @@ totalRange = Range 0 . B.length . bytes
 -- | Return a 'Span' that covers the entire text.
 totalSpan :: Source -> Span
 totalSpan source = Span (Pos 1 1) (Pos (Prelude.length ranges) (succ (end lastRange - start lastRange)))
-  where
-    ranges = lineRanges source
-    lastRange = fromMaybe lowerBound (getLast (foldMap (Last . Just) ranges))
+ where
+  ranges = lineRanges source
+  lastRange = fromMaybe lowerBound (getLast (foldMap (Last . Just) ranges))
 
 -- En/decoding
 
@@ -100,9 +100,9 @@ toText = T.decodeUtf8With lenientDecode . bytes
 -- | Return a 'Source' that contains a slice of the given 'Source'.
 slice :: Source -> Range -> Source
 slice source range = taking $ dropping source
-  where
-    dropping = drop (start range)
-    taking = take (rangeLength range)
+ where
+  dropping = drop (start range)
+  taking = take (rangeLength range)
 
 drop :: Int -> Source -> Source
 drop i = Source . B.drop i . bytes
@@ -123,27 +123,27 @@ lineRanges source = lineRangesWithin source (totalRange source)
 -- | Compute the 'Range's of each line in a 'Range' of a 'Source'.
 lineRangesWithin :: Source -> Range -> [Range]
 lineRangesWithin source range =
-    uncurry (zipWith Range)
-        . ((start range :) &&& (<> [end range]))
-        . fmap (+ succ (start range))
-        . newlineIndices
-        . bytes
-        $ slice source range
+  uncurry (zipWith Range)
+    . ((start range :) &&& (<> [end range]))
+    . fmap (+ succ (start range))
+    . newlineIndices
+    . bytes
+    $ slice source range
 
 -- | Return all indices of newlines ('\n', '\r', and '\r\n') in the 'ByteString'.
 newlineIndices :: B.ByteString -> [Int]
 newlineIndices = go 0
-  where
-    go n bs
-        | B.null bs = []
-        | otherwise = case (searchCR bs, searchLF bs) of
-            (Nothing, Nothing) -> []
-            (Just i, Nothing) -> recur n i bs
-            (Nothing, Just i) -> recur n i bs
-            (Just crI, Just lfI)
-                | succ crI == lfI -> recur n lfI bs
-                | otherwise -> recur n (min crI lfI) bs
-    recur n i bs = let j = n + i in j : go (succ j) (B.drop (succ i) bs)
-    searchLF = B.elemIndex (toEnum (ord '\n'))
-    searchCR = B.elemIndex (toEnum (ord '\r'))
+ where
+  go n bs
+    | B.null bs = []
+    | otherwise = case (searchCR bs, searchLF bs) of
+        (Nothing, Nothing) -> []
+        (Just i, Nothing) -> recur n i bs
+        (Nothing, Just i) -> recur n i bs
+        (Just crI, Just lfI)
+          | succ crI == lfI -> recur n lfI bs
+          | otherwise -> recur n (min crI lfI) bs
+  recur n i bs = let j = n + i in j : go (succ j) (B.drop (succ i) bs)
+  searchLF = B.elemIndex (toEnum (ord '\n'))
+  searchCR = B.elemIndex (toEnum (ord '\r'))
 {-# INLINE newlineIndices #-}

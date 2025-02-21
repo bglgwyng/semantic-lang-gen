@@ -43,13 +43,25 @@
         };
         flake = pkgs.${name}.flake { };
       in
-      (flake // rec {
+      (flake // {
         packages.default = flake.packages."${name}:exe:app";
         devShells.default = flake.devShell.overrideAttrs (oldAttrs: {
-          buildInputs = oldAttrs.buildInputs ++ [
+          nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [
             pkgs.tree-sitter
             pkgs.nodejs_22
           ];
         });
+        generate-parser = grammar-js: pkgs.runCommand "generate-parser" { } ''
+          ${pkgs.tree-sitter}/bin/tree-sitter generate ${grammar-js}
+          cp dump.txt $out
+        '';
+        packages.example-parser = pkgs.callPackage ./nix/generate-parser.nix {
+          inherit pkgs;
+          name = "example-parser";
+          grammar-js = ./example/grammar.js;
+        };
       }));
 }
+
+
+

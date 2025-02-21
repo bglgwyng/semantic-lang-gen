@@ -8,6 +8,28 @@ common shared
   default-language: GHC2021
   default-extensions:
     ImportQualifiedPost
+  build-depends:
+    , base
+    , template-haskell
+    , aeson
+    , bytestring
+    , text
+    , attoparsec
+    , containers
+    , unordered-containers
+    , hashable
+    , deepseq
+    , semilattices
+    , filepath
+    , directory
+    , Glob
+    , fused-effects
+    , lingo
+    , tree-sitter
+    , tree-sitter-go
+    , tree-sitter-haskell
+    , tasty
+    , tasty-hunit
 
 library
   import: shared
@@ -33,36 +55,12 @@ library
     Source.Span
   other-modules:
     Paths_tree_sitter_gen
-  build-depends:
-      base
-    , aeson
-    , bytestring
-    , containers
-    , deepseq
-    , filepath
-    , fused-effects
-    , hashable
-    , lingo
-    , semilattices
-    , tasty
-    , tasty-hunit
-    , text
-    , tree-sitter
-    , tree-sitter-go
-    , tree-sitter-haskell
-    , unordered-containers
-    , template-haskell
-    , directory
-    , attoparsec
-    , Glob
 
 executable example-go
   import: shared
   hs-source-dirs: app
   main-is: example-go.hs   
   build-depends:
-      base
-    , tree-sitter
     , tree-sitter-gen
     , tree-sitter-go
 

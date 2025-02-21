@@ -14,4 +14,8 @@ pkgs.stdenv.mkDerivation {
     mkdir -p $out
     cp -r ./* $out
   '';
+  postInstall = ''
+    mkdir -p $out/etc
+    mv $out/env-vars $out/etc/
+  '';
 }

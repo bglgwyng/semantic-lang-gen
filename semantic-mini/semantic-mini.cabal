@@ -1,6 +1,6 @@
 cabal-version: 3.0
 
-name:           tree-sitter-gen
+name:           semantic-mini
 version:        0.1.0
 
 common shared
@@ -30,20 +30,27 @@ common shared
     , tasty
     , tasty-hunit
 
-executable example-go
+library
   import: shared
-  hs-source-dirs: app
-  main-is: example-go.hs   
-  build-depends:
-    , semantic-mini
-
-executable generate-types
-  import: shared
-  hs-source-dirs: app
-  main-is: generate-types.hs
-  build-depends:
-    , semantic-mini
-    , lens
-    , generic-lens
-    , process
-    , neat-interpolation
+  hs-source-dirs: lib
+  exposed-modules:
+    AST.Deserialize
+    AST.Element
+    AST.GenerateSyntax
+    AST.Grammar.Examples
+    AST.Grammar.TH
+    AST.Marshal.JSON
+    AST.Parse
+    AST.TestHelpers
+    AST.Token
+    AST.Traversable1
+    AST.Traversable1.Class
+    AST.Unmarshal
+    Language.Go.AST
+    Source.Language
+    Source.Loc
+    Source.Range
+    Source.Source
+    Source.Span
+  other-modules:
+    Paths_semantic_mini

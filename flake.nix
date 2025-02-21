@@ -1,5 +1,5 @@
 {
-  description = "dEsCrIpTiOn";
+  description = "Tree-sitter binding generator for Haskell";
 
   nixConfig = {
     extra-substituters = [ "https://cache.iog.io" ];
@@ -15,7 +15,7 @@
 
   outputs = { self, nixpkgs, flake-utils, haskellNix, ... }:
     let
-      name = "nAmE";
+      name = "tree-sitter-gen";
     in
     flake-utils.lib.eachDefaultSystem (system:
       let

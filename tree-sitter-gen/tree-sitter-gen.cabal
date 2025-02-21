@@ -1,0 +1,68 @@
+cabal-version: 3.0
+
+name:           tree-sitter-gen
+version:        0.1.0
+build-type:     Simple
+
+common shared
+  default-language: GHC2021
+  default-extensions:
+    ImportQualifiedPost
+
+library
+  import: shared
+  hs-source-dirs: lib
+  exposed-modules:
+    AST.Deserialize
+    AST.Element
+    AST.GenerateSyntax
+    AST.Grammar.Examples
+    AST.Grammar.TH
+    AST.Marshal.JSON
+    AST.Parse
+    AST.TestHelpers
+    AST.Token
+    AST.Traversable1
+    AST.Traversable1.Class
+    AST.Unmarshal
+    Language.Go.AST
+    Source.Language
+    Source.Loc
+    Source.Range
+    Source.Source
+    Source.Span
+  other-modules:
+    Paths_tree_sitter_gen
+  build-depends:
+      base
+    , aeson
+    , bytestring
+    , containers
+    , deepseq
+    , filepath
+    , fused-effects
+    , hashable
+    , lingo
+    , semilattices
+    , tasty
+    , tasty-hunit
+    , text
+    , tree-sitter
+    , tree-sitter-go
+    , tree-sitter-haskell
+    , unordered-containers
+    , template-haskell
+    , directory
+    , attoparsec
+    , Glob
+
+executable example-go
+  import: shared
+  hs-source-dirs: app
+  main-is: example-go.hs   
+  build-depends:
+      base
+    , tree-sitter
+    , tree-sitter-gen
+    , tree-sitter-go
+

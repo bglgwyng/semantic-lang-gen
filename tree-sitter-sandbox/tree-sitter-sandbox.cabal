@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 
-name:           nAmE
+name:           tree-sitter-sandbox
 version:        0.0.0
 build-type:     Simple
 
@@ -30,7 +30,7 @@ executable app
       Source.Source
       Source.Span
       TypeGen
-      Paths_nAmE
+      Paths_tree_sitter_sandbox
   hs-source-dirs:
       app
   default-extensions:

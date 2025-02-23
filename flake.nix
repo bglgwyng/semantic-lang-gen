@@ -21,15 +21,12 @@
         # Per-system attributes can be defined here. The self' and inputs'
         # module parameters provide easy access to attributes of the same
         # system.
-        # overlay = [ ];
 
-        # Equivalent to  inputs'.nixpkgs.legacyPackages.hello;
         packages.tree-sitter = inputs'.tree-sitter.packages.default;
-        packages.semantic-mini = (pkgs.haskellPackages.callCabal2nix "semantic-mini" ./semantic-mini { });
 
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = [
-            # tree-sitter
+            inputs'.tree-sitter.packages.default
             pkgs.nodejs_22
           ];
         };

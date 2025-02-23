@@ -1,6 +1,6 @@
 # semantic-lang-gen
 
-Generates Haskell bindings from Tree-sitter grammar. Also automatically generates typed AST with semantic.
+Generates Haskell bindings from Tree-sitter grammar. Also automatically generates typed AST.
 
 ## Brief description
 

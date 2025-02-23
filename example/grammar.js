@@ -1,5 +1,5 @@
 module.exports = grammar({
-  name: 'your_language22',
+  name: 'yourlanguage',
 
   rules: {
     // The root rule - program consists of multiple statements

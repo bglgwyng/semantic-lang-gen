@@ -1,14 +1,15 @@
-{ pkgs, name, grammar-js }:
+{ tree-sitter }: { pkgs, lang, grammar-js }:
 pkgs.stdenv.mkDerivation {
-  inherit name;
+  inherit lang;
+  name = "tree-sitter-${lang}";
   src = grammar-js;
-  buildInputs = [ pkgs.tree-sitter pkgs.nodejs_22 ];
+  nativeBuildInputs = [ tree-sitter pkgs.nodejs_22 ];
   dontUnpack = true;
   # why tmp is needed?
   buildPhase = ''
     mkdir tmp
     cd tmp
-    ${pkgs.tree-sitter}/bin/tree-sitter generate $src
+    tree-sitter generate --prev-abi $src
   '';
   installPhase = ''
     mkdir -p $out

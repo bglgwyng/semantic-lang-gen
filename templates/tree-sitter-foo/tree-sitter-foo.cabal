@@ -3,8 +3,6 @@ name:                tree-sitter-foo
 version:             0.1.0.0
 description:         This package provides a parser for Foo suitable for use with the tree-sitter package.
 
-category:            Tree-sitter, Foo
-build-type:          Simple
 data-files:          vendor/tree-sitter-foo/src/node-types.json
 
 common common

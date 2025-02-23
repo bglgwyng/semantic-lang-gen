@@ -8,16 +8,17 @@
 module Source.Language (
   Language (..),
   SLanguage (..),
-  extensionsForLanguage,
+  -- extensionsForLanguage,
   knownLanguage,
-  forPath,
+  -- forPath,
   textToLanguage,
   languageToText,
 ) where
 
 import Data.Aeson
 import Data.Hashable (Hashable)
-import Data.Languages qualified as Lingo
+
+-- import Data.Languages qualified as Lingo
 import Data.Map.Strict qualified as Map
 import Data.Text qualified as T
 import GHC.Generics (Generic)
@@ -91,21 +92,21 @@ instance FromJSON Language where
 knownLanguage :: Language -> Bool
 knownLanguage = (/= Unknown)
 
-extensionsForLanguage :: Language -> [String]
-extensionsForLanguage language = fmap T.unpack (maybe mempty Lingo.languageExtensions (Map.lookup (languageToText language) Lingo.languages))
+-- extensionsForLanguage :: Language -> [String]
+-- extensionsForLanguage language = fmap T.unpack (maybe mempty Lingo.languageExtensions (Map.lookup (languageToText language) Lingo.languages))
 
-forPath :: FilePath -> Language
-forPath path =
-  let spurious lang =
-        lang
-          `elem` [ "Hack" -- .php files
-                 , "GCC Machine Description" -- .md files
-                 , "XML" -- .tsx files
-                 ]
-      allResults = Lingo.languageName <$> Lingo.languagesForPath path
-   in case filter (not . spurious) allResults of
-        [result] -> textToLanguage result
-        _ -> Unknown
+-- forPath :: FilePath -> Language
+-- forPath path =
+--   let spurious lang =
+--         lang
+--           `elem` [ "Hack" -- .php files
+--                  , "GCC Machine Description" -- .md files
+--                  , "XML" -- .tsx files
+--                  ]
+--       allResults = Lingo.languageName <$> Lingo.languagesForPath path
+--    in case filter (not . spurious) allResults of
+--         [result] -> textToLanguage result
+--         _ -> Unknown
 
 languageToText :: Language -> T.Text
 languageToText = \case

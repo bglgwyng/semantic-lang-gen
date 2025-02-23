@@ -1,4 +1,4 @@
-{ pkgs, haskellPackages, Lang, parser, src-only ? false }:
+{ pkgs, Lang, parser, src-only ? false }:
 let
   lang = parser.lang;
   src = pkgs.stdenv.mkDerivation {
@@ -23,7 +23,7 @@ in
 if src-only then
   src
 else
-  (haskellPackages.callCabal2nix "tree-sitter-${lang}" src { }).overrideAttrs (_: {
+  (pkgs.haskellPackages.callCabal2nix "tree-sitter-${lang}" src { }).overrideAttrs (_: {
     inherit lang Lang parser;
   })
   

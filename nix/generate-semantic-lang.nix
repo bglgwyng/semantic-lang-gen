@@ -1,7 +1,8 @@
-{ pkgs, haskellPackages, tree-sitter-lang }:
+{ pkgs, tree-sitter-lang }:
 let
   lang = tree-sitter-lang.lang;
   Lang = tree-sitter-lang.Lang;
+  haskellPackages = pkgs.haskellPackages;
   generator-src = pkgs.stdenv.mkDerivation {
     name = "semantic-lang-generator";
     dontUnpack = true;
@@ -43,29 +44,3 @@ in
 haskellPackages.callCabal2nix "semantic-${lang}" "${src}" {
   inherit (haskellPackages) semantic-mini;
 }
-
-# generator
-
-# haskellPackages.callCabal2nix "semantic-${lang}-generator" "${src}" {
-# inherit (haskellPackages) semantic-mini;
-# inherit tree-sitter-lang;
-# }
-
-# semantic-lang = { name, Name }:
-# let
-# node-types-json = "${pkgs.callPackage ./nix/generate-parser.nix { name = "yourlanguage"; grammar-js = ./example/grammar.js; }}/src/node-types.json";
-# in
-# pkgs.stdenv.mkDerivation {
-# name = "semantic-lang";
-# buildInputs = [
-# (pkgs.haskell.lib.justStaticExecutables
-# (generate-semantic-lang-generator { inherit name Name; }))
-# ];
-# dontUnpack = true;
-# buildPhase = ''
-#       generate-semantic ${node-types-json} > $out
-#     '';
-# installPhase = ''
-#       cp out.txt $out
-#     '';
-# };

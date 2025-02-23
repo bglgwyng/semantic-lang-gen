@@ -34,7 +34,6 @@ library
     AST.Deserialize
     AST.Element
     AST.GenerateSyntax
-    AST.Grammar.Examples
     AST.Grammar.TH
     AST.Marshal.JSON
     AST.Parse
@@ -43,7 +42,6 @@ library
     AST.Traversable1
     AST.Traversable1.Class
     AST.Unmarshal
-    Language.Go.AST
     Source.Language
     Source.Loc
     Source.Range

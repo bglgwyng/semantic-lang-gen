@@ -23,10 +23,8 @@ common shared
     , directory
     , Glob
     , fused-effects
-    , lingo
+    -- , lingo
     , tree-sitter
-    , tree-sitter-go
-    , tree-sitter-haskell
     , tasty
     , tasty-hunit
 

@@ -21,13 +21,18 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         tree-sitter = inputs.tree-sitter.packages.${system}.default;
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs {
+          inherit system;
+          config = { allowBroken = true; };
+        };
       in
       ({
         packages.tree-sitter = pkgs.tree-sitter;
-
+        packages.semantic-mini = (pkgs.haskellPackages.callCabal2nix "semantic-mini" ./semantic-mini { });
+        semantic-mini = ./semantic-mini;
         generate-parser = pkgs.callPackage ./nix/generate-parser.nix { inherit tree-sitter; };
         generate-tree-sitter-lang = pkgs.callPackage ./nix/generate-tree-sitter-lang.nix;
+        generate-semantic-lang = pkgs.callPackage ./nix/generate-semantic-lang.nix;
 
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = [

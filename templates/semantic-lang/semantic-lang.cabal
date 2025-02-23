@@ -1,0 +1,48 @@
+cabal-version:       3.0
+
+name:                semantic-foo
+version:             0.1.0.0
+synopsis:            Semantic support for Foo.
+description:         Semantic support for Foo.
+
+common shared
+  default-language:    Haskell2010
+  ghc-options:
+    -Weverything
+    -Wno-missing-local-signatures
+    -Wno-missing-import-lists
+    -Wno-implicit-prelude
+    -Wno-safe
+    -Wno-unsafe
+    -Wno-name-shadowing
+    -Wno-monomorphism-restriction
+    -Wno-missed-specialisations
+    -Wno-all-missed-specialisations
+    -Wno-star-is-type
+  if (impl(ghc >= 8.8))
+    ghc-options: -Wno-missing-deriving-strategies
+  if (impl(ghc >= 8.10))
+    ghc-options:
+      -Wno-missing-safe-haskell-mode
+      -Wno-prepositive-qualified-module
+  if (impl(ghc >= 9.2))
+    ghc-options:
+      -Wno-missing-kind-signatures
+
+library
+  import: shared
+  exposed-modules:
+    Language.Foo.AST
+  hs-source-dirs: src
+  build-depends:
+    , base  >= 4.13 && < 5
+    , fused-effects ^>= 1.1
+    , semantic-mini
+    -- , semantic-ast
+    -- , semantic-proto ^>= 0
+    -- , semantic-source ^>= 0.2
+    -- , semantic-tags ^>= 0.0
+    , template-haskell
+    , text
+    , tree-sitter ^>= 0.9
+    , tree-sitter-foo

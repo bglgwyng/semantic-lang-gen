@@ -23,5 +23,7 @@ in
 if src-only then
   src
 else
-  haskellPackages.callCabal2nix "tree-sitter-${lang}" src { }
+  (haskellPackages.callCabal2nix "tree-sitter-${lang}" src { }).overrideAttrs (_: {
+    inherit lang Lang parser;
+  })
   

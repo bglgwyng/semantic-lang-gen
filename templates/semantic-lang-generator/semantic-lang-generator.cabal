@@ -1,0 +1,21 @@
+cabal-version: 3.0
+
+name:           semantic-lang-generator
+version:        0.1.0
+
+executable generate-semantic
+  hs-source-dirs: .
+  main-is: generate-semantic.hs
+  build-depends:
+    , base
+    , template-haskell
+    , text
+    , filepath
+    , directory
+    , semantic-mini
+    , tree-sitter
+    , tree-sitter-foo
+    , lens
+    , generic-lens
+    , process
+    , neat-interpolation

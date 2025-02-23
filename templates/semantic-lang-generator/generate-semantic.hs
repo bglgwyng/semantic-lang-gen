@@ -27,7 +27,6 @@ import Language.Haskell.TH hiding (JavaScript)
 import Language.Haskell.TH.Lens
 import NeatInterpolation
 
-import Source.Language
 import System.Directory
 import System.Environment (getArgs)
 import System.Exit

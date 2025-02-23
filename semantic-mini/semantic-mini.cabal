@@ -42,7 +42,6 @@ library
     AST.Traversable1
     AST.Traversable1.Class
     AST.Unmarshal
-    Source.Language
     Source.Loc
     Source.Range
     Source.Source

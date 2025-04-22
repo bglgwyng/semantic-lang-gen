@@ -4,7 +4,10 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    tree-sitter.url = "github:bglgwyng/tree-sitter?ref=nix-abi-11";
+    haskell-tree-sitter = {
+      url = "git+ssh://git@github.com/bglgwyng/haskell-tree-sitter?submodules=1";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -26,7 +29,7 @@
 
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = [
-            inputs'.tree-sitter.packages.default
+            pkgs.tree-sitter
             pkgs.nodejs_22
           ];
         };
@@ -34,10 +37,10 @@
       flake = {
 
         overlay = final: prev: {
-          tree-sitter = inputs.tree-sitter.packages.${prev.stdenv.hostPlatform.system}.default;
           haskellPackages = prev.haskellPackages.override (_: {
             overrides = self: super: {
               semantic-mini = self.callCabal2nix "semantic-mini" ./semantic-mini { };
+              tree-sitter = self.callCabal2nix "tree-sitter" "${inputs.haskell-tree-sitter}/tree-sitter" { };
             };
           });
 

@@ -9,7 +9,7 @@ pkgs.stdenv.mkDerivation {
   buildPhase = ''
     mkdir tmp
     cd tmp
-    tree-sitter generate --prev-abi $src
+    tree-sitter generate --abi 14 $src
   '';
   installPhase = ''
     mkdir -p $out

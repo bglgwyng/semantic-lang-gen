@@ -94,9 +94,13 @@ syntaxDatatype lookupType language allSymbols datatype = skipDefined $ do
   let traversalInstances = mappend <$> makeStandaloneDerivings (conT name) <*> makeTraversalInstances (conT name)
       glue a b c = a : b <> c
       name = mkName nameStr
-      generatedDatatype cons = dataD (cxt []) name [plainTV annParameterName] Nothing cons [deriveStockClause, deriveAnyClassClause]
+      generatedDatatype cons = dataD (cxt []) name [plainTV annParameterName] Nothing cons (deriveStockClause : deriveAnyClassClause)
       deriveStockClause = derivClause (Just StockStrategy) [conT ''Generic, conT ''Generic1]
-      deriveAnyClassClause = derivClause (Just AnyclassStrategy) [[t|(forall a. Traversable1 a)|]]
+      deriveAnyClassClause = [
+          derivClause (Just AnyclassStrategy) [parensT (appT (conT ''Traversable1) (conT ''Foldable))]
+          , derivClause (Just AnyclassStrategy) [parensT (appT (conT ''Traversable1) (conT ''Traversable))]
+          , derivClause (Just AnyclassStrategy) [parensT (appT (conT ''Traversable1) (conT ''Functor))]
+        ]
       deriveGN = derivClause (Just NewtypeStrategy) [conT ''TS.SymbolMatching]
   case datatype of
     SumType (DatatypeName _) _ subtypes ->
@@ -104,7 +108,7 @@ syntaxDatatype lookupType language allSymbols datatype = skipDefined $ do
           fieldName = mkName ("get" <> nameStr)
           con = recC name [varBangType fieldName (bangType strictness (types' `appT` varT annParameterName))]
           hasFieldInstance = makeHasFieldInstance (conT name) (varE fieldName)
-          newType = newtypeD (cxt []) name [plainTV annParameterName] Nothing con [deriveGN, deriveStockClause, deriveAnyClassClause]
+          newType = newtypeD (cxt []) name [plainTV annParameterName] Nothing con (deriveGN : deriveStockClause : deriveAnyClassClause)
        in glue <$> newType <*> hasFieldInstance <*> traversalInstances
     ProductType datatypeName named children fields ->
       let con = ctorForProductType datatypeName children fields

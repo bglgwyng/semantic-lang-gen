@@ -1,1 +1,1 @@
-packages: semantic-mini/semantic-mini.cabal tree-sitter-gen/tree-sitter-gen.cabal
+packages: semantic-mini/semantic-mini.cabal

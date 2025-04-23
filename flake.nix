@@ -25,17 +25,28 @@
         # module parameters provide easy access to attributes of the same
         # system.
 
+        _module.args.pkgs = import inputs.nixpkgs {
+          inherit system;
+          overlays = [
+            inputs.self.overlay
+          ];
+          config.allowBroken = true;
+        };
+
         packages.tree-sitter = inputs'.tree-sitter.packages.default;
 
-        devShells.default = pkgs.mkShell {
+        devShells.default = pkgs.haskellPackages.shellFor {
+          packages = hpkgs: [
+            hpkgs.semantic-mini
+          ];
           nativeBuildInputs = [
             pkgs.tree-sitter
             pkgs.nodejs_22
+            pkgs.haskellPackages.haskell-language-server
           ];
         };
       };
       flake = {
-
         overlay = final: prev: {
           haskellPackages = prev.haskellPackages.override (_: {
             overrides = self: super: {
@@ -43,7 +54,6 @@
               tree-sitter = self.callCabal2nix "tree-sitter" "${inputs.haskell-tree-sitter}/tree-sitter" { };
             };
           });
-
         };
         # 
         generate-parser = import ./nix/generate-parser.nix;

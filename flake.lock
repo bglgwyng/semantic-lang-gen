@@ -21,11 +21,11 @@
     "haskell-tree-sitter": {
       "flake": false,
       "locked": {
-        "lastModified": 1745068530,
-        "narHash": "sha256-Q7ckR5qa6p2W3mWISDu6WvSTPcanig1p0vxSkVvJmMA=",
+        "lastModified": 1745474362,
+        "narHash": "sha256-CkEvLKS6DejSJL4iMDKTNQkh9RgzPod6iWeHIavGidM=",
         "ref": "refs/heads/master",
-        "rev": "628fd3c5ee96bf81f13bf0c57eb5e2702b2f6972",
-        "revCount": 2055,
+        "rev": "6c0d9df9953fbd4eaa111310e80e1b0b55346e20",
+        "revCount": 2056,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/bglgwyng/haskell-tree-sitter"

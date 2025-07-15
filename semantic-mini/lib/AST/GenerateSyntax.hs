@@ -96,10 +96,10 @@ syntaxDatatype lookupType language allSymbols datatype = skipDefined $ do
       name = mkName nameStr
       generatedDatatype cons = dataD (cxt []) name [plainTV annParameterName] Nothing cons (deriveStockClause : deriveAnyClassClause)
       deriveStockClause = derivClause (Just StockStrategy) [conT ''Generic, conT ''Generic1]
-      deriveAnyClassClause = [
-          derivClause (Just AnyclassStrategy) [parensT (appT (conT ''Traversable1) (conT ''Foldable))]
-          , derivClause (Just AnyclassStrategy) [parensT (appT (conT ''Traversable1) (conT ''Traversable))]
-          , derivClause (Just AnyclassStrategy) [parensT (appT (conT ''Traversable1) (conT ''Functor))]
+      deriveAnyClassClause =
+        [ derivClause (Just AnyclassStrategy) [parensT (appT (conT ''Traversable1) (conT ''Foldable))]
+        , derivClause (Just AnyclassStrategy) [parensT (appT (conT ''Traversable1) (conT ''Traversable))]
+        , derivClause (Just AnyclassStrategy) [parensT (appT (conT ''Traversable1) (conT ''Functor))]
         ]
       deriveGN = derivClause (Just NewtypeStrategy) [conT ''TS.SymbolMatching]
   case datatype of

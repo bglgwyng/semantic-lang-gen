@@ -1,35 +1,33 @@
 cabal-version: 3.0
-
-name:           semantic-mini
-version:        0.1.0
+name:          semantic-mini
+version:       0.1.0
 
 common shared
-  default-language: GHC2021
-  default-extensions:
-    ImportQualifiedPost
+  default-language:   GHC2021
+  default-extensions: ImportQualifiedPost
   build-depends:
-    , base
-    , template-haskell
     , aeson
-    , bytestring
-    , text
     , attoparsec
+    , base
+    , bytestring
     , containers
-    , unordered-containers
-    , hashable
     , deepseq
-    , semilattices
-    , filepath
     , directory
-    , Glob
+    , filepath
     , fused-effects
-    , tree-sitter
+    , Glob
+    , hashable
+    , semilattices
     , tasty
     , tasty-hunit
+    , template-haskell
+    , text
+    , tree-sitter
+    , unordered-containers
 
 library
-  import: shared
-  hs-source-dirs: lib
+  import:          shared
+  hs-source-dirs:  lib
   exposed-modules:
     AST.Deserialize
     AST.Element
@@ -46,5 +44,22 @@ library
     Source.Range
     Source.Source
     Source.Span
-  other-modules:
-    Paths_semantic_mini
+
+  other-modules:   Paths_semantic_mini
+
+executable generate-semantic-arith
+  import:         shared
+  main-is:        generate-semantic-arith.hs
+  hs-source-dirs: examples
+  build-depends:
+    , directory
+    , filepath
+    , generic-lens
+    , lens
+    , neat-interpolation
+    , process
+    , semantic-mini
+    , template-haskell
+    , text
+    , tree-sitter
+    , tree-sitter-arith

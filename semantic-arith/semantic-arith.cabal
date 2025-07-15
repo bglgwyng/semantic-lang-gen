@@ -1,8 +1,8 @@
 cabal-version: 3.0
-name:          semantic-foo
+name:          semantic-arith
 version:       0.1.0.0
-synopsis:      Semantic support for Foo.
-description:   Semantic support for Foo.
+synopsis:      Semantic support for Arith.
+description:   Semantic support for Arith.
 
 common shared
   default-language: Haskell2010
@@ -25,21 +25,23 @@ common shared
 
 library
   import:          shared
-  exposed-modules:
-    Language.Foo.AST
-    Language.Foo.Grammar
-
+  exposed-modules: Language.Arith.AST
   hs-source-dirs:  src
   build-depends:
-    , base              >=4.13 && <5
-    , fused-effects     ^>=1.1
+    , base               >=4.13 && <5
+    , fused-effects      ^>=1.1
     , semantic-mini
     , template-haskell
     , text
-    , tree-sitter       ^>=0.9
-    , tree-sitter-foo
+    , tree-sitter        ^>=0.9
+    , tree-sitter-arith
 
--- , semantic-ast
--- , semantic-proto ^>= 0
--- , semantic-source ^>= 0.2
--- , semantic-tags ^>= 0.0
+executable semantic-arith
+  import:        shared
+  build-depends:
+    , base
+    , semantic-arith
+    , semantic-mini
+    , tree-sitter-arith
+
+  main-is:       app/main.hs

@@ -1,69 +1,91 @@
 {
-  description = "Description for the project";
+  description = "Semantic language generation framework";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    haskell-flake.url = "github:srid/haskell-flake";
     haskell-tree-sitter = {
       url = "git+ssh://git@github.com/bglgwyng/haskell-tree-sitter?submodules=1";
       flake = false;
     };
+    hypertypes = {
+      url = "github:lamdu/hypertypes";
+      flake = false;
+    };
+    th-abstraction = {
+      url = "github:glguy/th-abstraction/v0.6.0.0";
+      flake = false;
+    };
   };
 
-  outputs = inputs@{ flake-parts, ... }:
+  outputs = inputs @ { flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        # To import a flake module
-        # 1. Add foo to inputs
-        # 2. Add foo as a parameter to the outputs function
-        # 3. Add here: foo.flakeModule
-
-      ];
+      debug = true;
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      perSystem = { config, self', inputs', pkgs, system, withSystem, ... }: {
-        # Per-system attributes can be defined here. The self' and inputs'
-        # module parameters provide easy access to attributes of the same
-        # system.
 
+      imports = [
+        inputs.haskell-flake.flakeModule
+      ];
+
+      perSystem = { config, self', inputs', pkgs, system, ... }: {
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
-          overlays = [
-            inputs.self.overlay
-          ];
           config.allowBroken = true;
+        };
+
+        haskellProjects.default = {
+          projectRoot = ./.;
+
+          basePackages = pkgs.haskell.packages.ghc984;
+          packages = {
+            tree-sitter-arith.source = import ./nix/generate-tree-sitter-lang.nix
+              {
+                inherit pkgs;
+                Lang = "Arith";
+                parser = import ./nix/generate-parser.nix
+                  {
+                    inherit pkgs;
+                    lang = "arith";
+                    grammar-js = ./example/grammar.js;
+                  };
+                src-only = true;
+              };
+            tree-sitter.source = "${inputs.haskell-tree-sitter}/tree-sitter";
+            hypertypes.source = inputs.hypertypes;
+            th-abstraction.source = inputs.th-abstraction;
+          };
+
+          devShell = {
+            hlsCheck.enable = false;
+            tools = hpkgs: with hpkgs; {
+              inherit cabal-fmt;
+            };
+            hoogle = true;
+          };
+
+          autoWire = [ "packages" ];
         };
 
         packages.tree-sitter = inputs'.tree-sitter.packages.default;
 
-        devShells.default = pkgs.haskellPackages.shellFor {
-          packages = hpkgs: [
-            hpkgs.semantic-mini
+        devShells.default = pkgs.mkShell {
+          inputsFrom = [
+            config.haskellProjects.default.outputs.devShell
           ];
-          nativeBuildInputs = [
-            pkgs.tree-sitter
-            pkgs.nodejs_22
-            pkgs.haskellPackages.haskell-language-server
+          nativeBuildInputs = with pkgs; [
+            just
+            nodejs_22
+            tree-sitter
           ];
         };
       };
+
       flake = {
-        overlay = final: prev: {
-          haskellPackages = prev.haskellPackages.override (_: {
-            overrides = self: super: {
-              semantic-mini = self.callCabal2nix "semantic-mini" ./semantic-mini { };
-              tree-sitter = self.callCabal2nix "tree-sitter" "${inputs.haskell-tree-sitter}/tree-sitter" { };
-            };
-          });
-        };
-        # 
+        # Export utility functions
         generate-parser = import ./nix/generate-parser.nix;
         generate-tree-sitter-lang = import ./nix/generate-tree-sitter-lang.nix;
         generate-semantic-lang = import ./nix/generate-semantic-lang.nix;
-
-        # The usual flake attributes can be defined here, including system-
-        # agnostic ones like nixosModule and system-enumerating ones, although
-        # those are more easily expressed in perSystem.
-
       };
     };
 }

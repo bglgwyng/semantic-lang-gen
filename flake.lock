@@ -51,22 +51,6 @@
         "url": "ssh://git@github.com/bglgwyng/haskell-tree-sitter"
       }
     },
-    "hypertypes": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1736712348,
-        "narHash": "sha256-t1iGRLUCv01gDeHjbWP8NyyLgXgaDW26BaCFlQ5R4NQ=",
-        "owner": "lamdu",
-        "repo": "hypertypes",
-        "rev": "06cf48ef9c85c54cbe722a448754cb89931b23e7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lamdu",
-        "repo": "hypertypes",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1762844143,
@@ -100,27 +84,8 @@
         "flake-parts": "flake-parts",
         "haskell-flake": "haskell-flake",
         "haskell-tree-sitter": "haskell-tree-sitter",
-        "hypertypes": "hypertypes",
         "nixpkgs": "nixpkgs",
-        "th-abstraction": "th-abstraction",
         "tree-sitter": "tree-sitter"
-      }
-    },
-    "th-abstraction": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1690805448,
-        "narHash": "sha256-HHcJQUAU8jNsMFWoHNobsfOC/XV1ZzjoJMjvHOOC58Y=",
-        "owner": "glguy",
-        "repo": "th-abstraction",
-        "rev": "8130497fc938cbb96dac40047617aaa85911f9b5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "glguy",
-        "ref": "v0.6.0.0",
-        "repo": "th-abstraction",
-        "type": "github"
       }
     },
     "tree-sitter": {

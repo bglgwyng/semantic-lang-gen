@@ -59,8 +59,8 @@ debugSymbolNames_0 = ["_end",
 data BinaryExpression a
     = BinaryExpression {ann :: a,
                         right :: (AST.Parse.Err (((BinaryExpression GHC.Generics.:+: Identifier) GHC.Generics.:+: (Number GHC.Generics.:+: (ParenthesizedExpression GHC.Generics.:+: UnaryExpression))) a)),
-                        operator :: (AST.Parse.Err (((AnonymousPercent GHC.Generics.:+: AnonymousStar) GHC.Generics.:+: (AnonymousPlus GHC.Generics.:+: (AnonymousMinus GHC.Generics.:+: AnonymousSlash))) a)),
-                        left :: (AST.Parse.Err (((BinaryExpression GHC.Generics.:+: Identifier) GHC.Generics.:+: (Number GHC.Generics.:+: (ParenthesizedExpression GHC.Generics.:+: UnaryExpression))) a))}
+                        left :: (AST.Parse.Err (((BinaryExpression GHC.Generics.:+: Identifier) GHC.Generics.:+: (Number GHC.Generics.:+: (ParenthesizedExpression GHC.Generics.:+: UnaryExpression))) a)),
+                        operator :: (AST.Parse.Err (((AnonymousPercent GHC.Generics.:+: AnonymousStar) GHC.Generics.:+: (AnonymousPlus GHC.Generics.:+: (AnonymousMinus GHC.Generics.:+: AnonymousSlash))) a))}
     deriving stock (GHC.Generics.Generic, GHC.Generics.Generic1)
     deriving anyclass (AST.Traversable1.Class.Traversable1 Data.Foldable.Foldable)
     deriving anyclass (AST.Traversable1.Class.Traversable1 Data.Traversable.Traversable)

@@ -86,7 +86,29 @@
         "flake-parts": "flake-parts",
         "haskell-flake": "haskell-flake",
         "haskell-tree-sitter": "haskell-tree-sitter",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "tree-sitter": "tree-sitter"
+      }
+    },
+    "tree-sitter": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1763106982,
+        "narHash": "sha256-aof7d0NFZfT4Ogbqg4nChr4LH2NgSubOZ04NcK4CbUI=",
+        "owner": "bglgwyng",
+        "repo": "tree-sitter",
+        "rev": "860a2ad6d773ac752808423bb0a07b94d44c63e1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bglgwyng",
+        "ref": "include-symbol_id-in-node-types-json",
+        "repo": "tree-sitter",
+        "type": "github"
       }
     }
   },

@@ -4,6 +4,10 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    tree-sitter = {
+      url = "github:bglgwyng/tree-sitter?ref=include-symbol_id-in-node-types-json";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     haskell-flake.url = "github:srid/haskell-flake";
     haskell-tree-sitter = {
       url = "git+ssh://git@github.com/bglgwyng/haskell-tree-sitter?submodules=1";

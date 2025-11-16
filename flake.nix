@@ -32,6 +32,22 @@
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
           config.allowBroken = true;
+          overlays = [
+            (_: _: {
+              tree-sitter-arith = import ./nix/generate-tree-sitter-lang.nix
+                {
+                  inherit pkgs;
+                  Lang = "Arith";
+                  parser = import ./nix/generate-parser.nix
+                    {
+                      inherit pkgs;
+                      lang = "arith";
+                      grammar-js = ./example/grammar.js;
+                    };
+                  src-only = true;
+                };
+            })
+          ];
         };
 
         haskellProjects.default = {
@@ -39,18 +55,7 @@
 
           basePackages = pkgs.haskell.packages.ghc984;
           packages = {
-            tree-sitter-arith.source = import ./nix/generate-tree-sitter-lang.nix
-              {
-                inherit pkgs;
-                Lang = "Arith";
-                parser = import ./nix/generate-parser.nix
-                  {
-                    inherit pkgs;
-                    lang = "arith";
-                    grammar-js = ./example/grammar.js;
-                  };
-                src-only = true;
-              };
+            tree-sitter-arith.source = pkgs.tree-sitter-arith;
             tree-sitter.source = "${inputs.haskell-tree-sitter}/tree-sitter";
             hypertypes.source = inputs.hypertypes;
             th-abstraction.source = inputs.th-abstraction;
@@ -68,6 +73,7 @@
         };
 
         packages.tree-sitter = inputs'.tree-sitter.packages.default;
+        packages.tree-sitter-arith = pkgs.tree-sitter-arith;
 
         devShells.default = pkgs.mkShell {
           inputsFrom = [

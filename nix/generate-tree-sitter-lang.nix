@@ -85,10 +85,4 @@ let
     '';
   };
 in
-if src-only then
-  src
-else
-  (pkgs.haskellPackages.callCabal2nix "tree-sitter-${lang}" src { }).overrideAttrs (_: {
-    inherit lang Lang parser;
-  })
-  
+src

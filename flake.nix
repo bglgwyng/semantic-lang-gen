@@ -36,7 +36,6 @@
                       lang = "arith";
                       grammar-js = ./example/grammar.js;
                     };
-                  src-only = true;
                 };
             })
           ];

@@ -26,13 +26,11 @@
           config.allowBroken = true;
           overlays = [
             (_: _: {
-              tree-sitter-arith = import ./nix/generate-tree-sitter-lang.nix
+              tree-sitter-arith = pkgs.callPackage ./nix/generate-tree-sitter-lang.nix
                 {
-                  inherit pkgs;
                   Lang = "Arith";
-                  parser = import ./nix/generate-parser.nix
+                  parser = pkgs.callPackage ./nix/generate-parser.nix
                     {
-                      inherit pkgs;
                       lang = "arith";
                       grammar-js = ./example/grammar.js;
                     };

@@ -9,14 +9,6 @@
       url = "git+ssh://git@github.com/bglgwyng/haskell-tree-sitter?submodules=1";
       flake = false;
     };
-    hypertypes = {
-      url = "github:lamdu/hypertypes";
-      flake = false;
-    };
-    th-abstraction = {
-      url = "github:glguy/th-abstraction/v0.6.0.0";
-      flake = false;
-    };
   };
 
   outputs = inputs @ { flake-parts, ... }:
@@ -52,15 +44,13 @@
 
         haskellProjects.default = {
           projectRoot = ./.;
-
-          basePackages = pkgs.haskell.packages.ghc984;
           packages = {
             tree-sitter-arith.source = pkgs.tree-sitter-arith;
             tree-sitter.source = "${inputs.haskell-tree-sitter}/tree-sitter";
-            hypertypes.source = inputs.hypertypes;
-            th-abstraction.source = inputs.th-abstraction;
           };
-
+          settings = {
+            tree-sitter.jailbreak = true;
+          };
           devShell = {
             hlsCheck.enable = false;
             tools = hpkgs: with hpkgs; {

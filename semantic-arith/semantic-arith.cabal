@@ -36,6 +36,9 @@ library
     , tree-sitter        ^>=0.9
     , tree-sitter-arith
 
+  if impl(ghc >=9.10)
+    build-depends: ghc-internal
+
 executable semantic-arith
   import:        shared
   build-depends:

@@ -5,11 +5,11 @@
         "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
-        "lastModified": 1738453229,
-        "narHash": "sha256-7H9XgNiGLKN1G1CgRh0vUL4AheZSYzPm+zmZ7vxbJdo=",
+        "lastModified": 1762980239,
+        "narHash": "sha256-8oNVE8TrD19ulHinjaqONf9QWCKK+w4url56cdStMpM=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "32ea77a06711b758da0ad9bd6a844c5740a87abd",
+        "rev": "52a2caecc898d0b46b2b905f058ccc5081f842da",
         "type": "github"
       },
       "original": {
@@ -20,11 +20,11 @@
     },
     "haskell-flake": {
       "locked": {
-        "lastModified": 1749105244,
-        "narHash": "sha256-gV/B1PWOwpLjy2OCHMS/fJ8GItMRoflW/g3kXB8/skg=",
+        "lastModified": 1763392528,
+        "narHash": "sha256-37+3FH27sizGB4sP6bj9aZSNYtwCkNNcAAqHNiUumCI=",
         "owner": "srid",
         "repo": "haskell-flake",
-        "rev": "af2ba40f23824556b12d1cdfdf392e263876d644",
+        "rev": "af3ce6314f39447be5960c242b3d09ae08b2d469",
         "type": "github"
       },
       "original": {
@@ -51,30 +51,13 @@
         "url": "ssh://git@github.com/bglgwyng/haskell-tree-sitter"
       }
     },
-    "hypertypes": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1736712348,
-        "narHash": "sha256-t1iGRLUCv01gDeHjbWP8NyyLgXgaDW26BaCFlQ5R4NQ=",
-        "owner": "lamdu",
-        "repo": "hypertypes",
-        "rev": "06cf48ef9c85c54cbe722a448754cb89931b23e7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "lamdu",
-        "repo": "hypertypes",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1739866667,
-        "narHash": "sha256-EO1ygNKZlsAC9avfcwHkKGMsmipUk1Uc0TbrEZpkn64=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "73cf49b8ad837ade2de76f87eb53fc85ed5d4680",
-        "type": "github"
+        "lastModified": 1762482733,
+        "narHash": "sha256-g/da4FzvckvbiZT075Sb1/YDNDr+tGQgh4N8i5ceYMg=",
+        "path": "/nix/store/ipyw6f3ah05zxy1imaydg5bmr8qmsiyc-source",
+        "rev": "e1ebeec86b771e9d387dd02d82ffdc77ac753abc",
+        "type": "path"
       },
       "original": {
         "owner": "NixOS",
@@ -85,14 +68,17 @@
     },
     "nixpkgs-lib": {
       "locked": {
-        "lastModified": 1738452942,
-        "narHash": "sha256-vJzFZGaCpnmo7I6i416HaBLpC+hvcURh/BQwROcGIp8=",
-        "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/072a6db25e947df2f31aab9eccd0ab75d5b2da11.tar.gz"
+        "lastModified": 1761765539,
+        "narHash": "sha256-b0yj6kfvO8ApcSE+QmA6mUfu8IYG6/uU28OFn4PaC8M=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "719359f4562934ae99f5443f20aa06c2ffff91fc",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/072a6db25e947df2f31aab9eccd0ab75d5b2da11.tar.gz"
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
       }
     },
     "root": {
@@ -100,26 +86,7 @@
         "flake-parts": "flake-parts",
         "haskell-flake": "haskell-flake",
         "haskell-tree-sitter": "haskell-tree-sitter",
-        "hypertypes": "hypertypes",
-        "nixpkgs": "nixpkgs",
-        "th-abstraction": "th-abstraction"
-      }
-    },
-    "th-abstraction": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1690805448,
-        "narHash": "sha256-HHcJQUAU8jNsMFWoHNobsfOC/XV1ZzjoJMjvHOOC58Y=",
-        "owner": "glguy",
-        "repo": "th-abstraction",
-        "rev": "8130497fc938cbb96dac40047617aaa85911f9b5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "glguy",
-        "ref": "v0.6.0.0",
-        "repo": "th-abstraction",
-        "type": "github"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

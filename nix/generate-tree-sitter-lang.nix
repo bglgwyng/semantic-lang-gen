@@ -1,9 +1,15 @@
-{ pkgs, Lang, parser, src-only ? false }:
+{ pkgs
+, parser
+, Lang
+, lang ? parser.lang
+, cabal-package-name ? "tree-sitter-${lang}"
+, src-only ? false
+}:
 let
-  lang = parser.lang;
-  cabal = pkgs.writeText "tree-sitter-${lang}.cabal" ''
+  cabal_package_name = builtins.replaceStrings [ "-" ] [ "_" ] cabal-package-name;
+  cabal = pkgs.writeText "${cabal-package-name}.cabal" ''
     cabal-version:       3.0
-    name:                tree-sitter-${lang}
+    name:                ${cabal-package-name}
     version:             0.1.0.0
     description:         This package provides a parser for ${Lang} suitable for use with the tree-sitter package.
 
@@ -38,14 +44,29 @@ let
     library
       import: common
       exposed-modules:     TreeSitter.${Lang}
-      autogen-modules:     Paths_tree_sitter_${lang}
-      other-modules:       Paths_tree_sitter_${lang}
+      autogen-modules:     Paths_${cabal_package_name}
+      other-modules:       Paths_${cabal_package_name}
       build-depends:       base
                          , tree-sitter
       Include-dirs:        vendor/tree-sitter-${lang}/src
       install-includes:    tree_sitter/parser.h
       extra-libraries:     stdc++
       c-sources:           vendor/tree-sitter-${lang}/src/parser.c${if parser.scanner-c == null then "" else ", vendor/tree-sitter-${lang}/src/scanner.c"}
+  '';
+  Lang-hs = pkgs.writeText "${Lang}.hs" ''
+    module TreeSitter.${Lang} (
+      tree_sitter_${lang},
+      getNodeTypesPath,
+    ) where
+
+    import Foreign.Ptr
+    import Paths_${cabal_package_name}
+    import TreeSitter.Language
+
+    foreign import ccall unsafe "vendor/tree-sitter-${lang}/src/parser.c tree_sitter_${parser.lang}" tree_sitter_${lang} :: Ptr Language
+
+    getNodeTypesPath :: IO FilePath
+    getNodeTypesPath = getDataFileName "vendor/tree-sitter-${lang}/src/node-types.json"
   '';
   src = pkgs.stdenv.mkDerivation {
     name = "tree-sitter-${lang}";
@@ -55,8 +76,7 @@ let
       cp -r ${parser} vendor/tree-sitter-${lang}
       ln -s ${cabal} tree-sitter-${lang}.cabal
       mkdir TreeSitter
-      cp ${../templates/tree-sitter-foo/TreeSitter/Foo.hs} TreeSitter/${Lang}.hs
-      substituteInPlace TreeSitter/${Lang}.hs --replace foo ${lang} --replace Foo ${Lang}
+      ln -s ${Lang-hs} TreeSitter/${Lang}.hs
     '';
     installPhase = ''
       rm env-vars
